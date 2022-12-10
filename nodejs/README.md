@@ -27,7 +27,7 @@
 
 - v8 is written in C++
 - v8 can run standalone or can be embedded into any C++ program
-- visit v8.dev for details
+- visit [chrome v8 engine](https://v8.dev/) for details
 
 ---
 
@@ -39,20 +39,55 @@ JavaScript runtime is an environment which provides all the necessary components
 - JavaScript Runtime has other modules in addition to the JavaScript Engine
 - Node.js can run the JavaScript program outside the browser
 
-github.com/nodejs/node ---- this repo contains code for JavaScript runtime
-node/deps/ ------------ contain dependencies
-uv(libuv) and v8 are the major dependencies present in deps folder
-src ------- contains code of nodejs in C++
-lib ------- this folder contains the JS code which access the C++ feature for example fs.js (to access file system)
+---
+
+#### Javascript Runtime Repository structure
+
+- This repo [JavaScript Runtime Repo](https://github.com/nodejs/node) contains code for JavaScript runtime
+- This folder [dependencies](https://github.com/nodejs/node/tree/main/deps) contains dependencies
+- uv(libuv) and v8 are the major dependencies present in deps folder
+- The [src folder](https://github.com/nodejs/node/tree/main/src) contains code of nodejs in C++
+- The [lib folder](https://github.com/nodejs/node/tree/main/lib) contains the JS code which access the C++ feature for example fs.js (to access file system)
+
+---
 
 ### Few words about Node.js
 
 - Node.js is not a language, it is not a framework
 - Node.js runtime unlike the browser runtime doesnot has access to the web apis. there is no window or document object when working with Node.js
+- with Nodejs we cannot interact with DOM, or other Web Platform Apis like Cookies. we don't have the document, window and all the other objects that are provided by the browser.
+- with browser we don't have all the nice APIs that Nodejs provides through its modules. for example filesystem access functionality
+- with Nodejs you control the envirnment
+- with browser you are the mercy of user choice
 
-nodejsfile>.vscode>settings.json>{"window.zoomLevel:2"}
+---
 
-node -v
+### zooming vscode editor text
+
+1. create `.vscode` folder
+2. inside `.vscode` create `settings.json` file
+3. write
+
+```json
+{
+  window.zoomLevel: 2 // default is 0
+}
+```
+
+---
+
+### Hello World program
+
+#### on Terminal
+
+1. `node -v`
+2. `node`
+3. then we can write javascript commands
+
+```
+  console.log("Hello world")
+  2+2
+```
 
 node REPL:
 Read
@@ -60,20 +95,20 @@ Evaluate
 Print
 Loop
 
-node
+#### writing JavaScript code in a file:
 
-> console.log("hello world")
-> 2+2
+1. create index.js file
+2. write the below code
 
-=> writing JavaScript code in a file:
+```
+console.log('Hello world from index.js')
+```
+
+3. in terminal run by executing
+
+```
 node index.js
-
-with Nodejs we cannot interact with DOM, or other Web Platform Apis like Cookies. we don't have the document, window and all the other objects that are provided by the browser.
-
-with browser we don't have all the nice APIs that Nodejs provides through its modules. for example filesystem access functionality
-
-with Nodejs you control the envirnment
-with browser you are the mercy of user choice
+```
 
 ---
 
@@ -82,7 +117,7 @@ with browser you are the mercy of user choice
 - A module is an encapsulated and reusable chunk of code that has its own context
 - In node.js, each file is treated as a separate module
 
-### Types of Modules
+#### Types of Modules
 
     1. Local Modules - Modules that we create in our application
     2. Built-in Modulues - Modules that Node.js ships with out of the box
