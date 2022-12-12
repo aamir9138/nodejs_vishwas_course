@@ -70,7 +70,7 @@ JavaScript runtime is an environment which provides all the necessary components
 
 ```json
 {
-  window.zoomLevel: 2 // default is 0
+  "window.zoomLevel": 2 // default is 0
 }
 ```
 
@@ -122,3 +122,62 @@ node index.js
     1. Local Modules - Modules that we create in our application
     2. Built-in Modulues - Modules that Node.js ships with out of the box
     3. Third party Modules - Modules written by other developers that we can use in our application
+
+---
+
+#### Local Modules
+
+Modules that we create and use in our Applications
+
+- in node.js each file is a module that is isolated by default
+- to load a module into another file, we use the require function
+- when index.js is executed, the code in the module is also executed
+- if the file we are requiring is a javascript file, we can skip specifying the extension and node.js will infer it on our behalf
+
+```
+  // index.js file
+  require('./add');
+  console.log('Hello world from index.js');
+
+  // add.js file below
+  const add = (a, b) => {
+  return a + b;
+  };
+  const sum = add(2, 3);
+  console.log(sum);
+```
+
+- let see in the next section how to expose certain things from the module not the full module
+
+#### CommonJS
+
+- CommonJS is a standard that states how a module should be structured and shared
+- Node.js adopted CommonJS when it started out and is what you will see in code bases
+- "./" refers to the same folder
+
+---
+
+#### Module Exports:
+
+- index.js file below
+
+```
+  const add = require('./add');
+  console.log('Hello world from index.js');
+
+  const sum = add(1, 2);
+  console.log(sum);
+
+  const sum2 = add(3, 5);
+  console.log(sum2);
+```
+
+- add.js file exported as module below
+
+```
+  // Module Exports to reuse the function as many times as we want
+  const add = (a, b) => {
+    return a + b;
+  };
+  module.exports = add;
+```
