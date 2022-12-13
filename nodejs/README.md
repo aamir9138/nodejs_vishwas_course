@@ -181,3 +181,44 @@ Modules that we create and use in our Applications
   };
   module.exports = add;
 ```
+
+---
+
+### Module Scope:
+
+- Each loaded module in Node.js is wrapped with an IIFE that provides private scoping of code
+- IIFE allows us to repeat variable or function names without any conflicts
+
+```
+  require('./batman');
+  require('./superman');
+```
+
+The content two files are down below
+
+```
+  const superHero = 'Batman';
+  console.log(superHero);
+
+  const superHero = 'Superman';
+  console.log(superHero);
+```
+
+#### IIFE (Immediately Invoked Function Expression) in Node.js
+
+- Before a module's code is executed, Node.js will wrap it with a function wrapper that provides module scope
+
+```
+  /* IIFE functions */
+  (function () {
+    const superHero = 'Superman';
+    console.log(superHero);
+  })();
+  (function () {
+    const superHero = 'Batman';
+    console.log(superHero);
+  })();
+```
+
+- This saves us from having to worry about conflicting variables or functions
+- There is proper encapsulation and reusability is unaffected
