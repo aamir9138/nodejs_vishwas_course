@@ -83,6 +83,45 @@ CommonJS:
 
 ---
 Module Exports:
+
+---
+Module Scope:
+	Each loaded module in Node.js is wrapped with an IIFE that provides private scoping of code
+
+	IIFE allows us to repeat variable or function names without any conflicts
+	
+IIFE (Immediately Invoked Function Expression) in Node.js
+	Before a module's code is executed, Node.js will wrap it with a function wrapper that provides module scope
+
+	This saves us from having to worry about conflicting variables or functions
+
+	There is proper encapsulation and reusability is unaffected
+
+---
+Module Wrapper:
+	- Every module in node.js gets wrapped in an IIFE before being loaded
+	- IIFE helps keep top-level variables scoped to the module rather than the global object
+ 	- The IIFE that wraps every module contains 5 parameters which are pretty important for the functioning of a module
+
+How parameters and arguments work with simple IIFE in Javascript:
+	/* How parameters and arguments work in simple IIFE in javascript */
+	/*  message == parameter
+    	"Hello" and "Hey" == argument
+    	output:
+      	$ node iife
+      	Hello Superman
+     	 Hey Batman*/
+	(function (message) {
+ 	 const superHero = 'Superman';
+  	console.log(message, superHero);
+	})('Hello');
+	(function (message) {
+ 	 const superHero = 'Batman';
+  	console.log(message, superHero);
+	})('Hey');
+
+How each Module is wrapped:
+ 
 	
 
 

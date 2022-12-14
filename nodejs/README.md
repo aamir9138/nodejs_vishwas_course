@@ -222,3 +222,58 @@ The content two files are down below
 
 - This saves us from having to worry about conflicting variables or functions
 - There is proper encapsulation and reusability is unaffected
+
+### Module Wrapper
+
+- Every module in node.js gets wrapped in an IIFE before being loaded
+- IIFE helps keep top-level variables scoped to the module rather than the global object
+- The IIFE that wraps every module contains 5 parameters which are pretty important for the functioning of a module
+
+#### How parameters and arguments work with simple IIFE in Javascript
+
+```
+/* How parameters and arguments work in simple IIFE in javascript */
+/*  message == parameter
+    "Hello" and "Hey" == argument
+    output:
+      $ node iife
+      Hello Superman
+      Hey Batman*/
+
+(function (message) {
+  const superHero = 'Superman';
+  console.log(message, superHero);
+})('Hello');
+
+(function (message) {
+  const superHero = 'Batman';
+  console.log(message, superHero);
+})('Hey');
+```
+
+#### How each Module is wrapped
+
+- here is our Module code
+
+```
+const superHero = 'Batman';
+console.log(superHero);
+```
+
+- here is the same code as above wrapped in an IIFE
+
+```
+(function () {
+  const superHero = 'Batman';
+  console.log(superHero);
+})
+```
+
+- here is the final code with parameters. There are five in total. these are exports, require, module, **filename, **dirname. node.js wrapped each module like IIFE with these global looking parametes which are actually specific to the the Module
+
+```
+(function (exports, require, module, __filename, __dirname) {
+  const superHero = 'Batman';
+  console.log(superHero);
+})
+```
