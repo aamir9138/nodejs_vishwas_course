@@ -277,3 +277,85 @@ console.log(superHero);
   console.log(superHero);
 })
 ```
+
+### Module Caching
+
+1. create a file `superHero.js`
+2. create a class in it `class SuperHero`
+3. create `getName` and `setName` methods
+4. an error encounterd `// const getName() --- a class member cannot have a const keyword`
+5. export the class with a default value of "Batman"
+6. we must use `new` keyword while exporting a class
+
+```
+class SuperHero {
+  constructor(name) {
+    this.name = name;
+  }
+  // const getName() --- a class member cannot have a const keyword
+  getName(){
+    return this.name;
+  };
+  setName(name) {
+    this.name = name;
+  }
+}
+
+module.exports = new SuperHero('Batman');
+```
+
+7. in index.js file require the `superHero.js` module
+   `const superHero = require('./superHero');`
+8. it will return an object
+9. console log the name `console.log(superHero.getName());`
+10. setName to superman and log the name again
+
+```
+superHero.setName('Superman');
+console.log(superHero.getName());
+```
+
+11. require the same module again and create a new instance
+
+```
+const newSuperHero = require('./superHero');
+console.log(newSuperHero.getName()); // superman
+```
+
+12. the results are now
+
+```
+Batman
+Superman
+Superman
+```
+
+13. This is because of caching. when we require a new module it is loaded and cached for subsequent loading !!important.
+
+### How to deal with separate instances of superHero module
+
+1. As of now when we create a new instance it is taking the last cached value which is set by the setName method.
+2. for this instead of export an instance in superHero module. export the whole class as follows
+
+```
+module.exports = SuperHero; // exporting the class. see the altered index.js code also for this
+```
+
+3. in index.js file the code is now
+
+```
+// when the module is exported as a class then
+const SuperHero = require('./superHero');
+
+// create an instance of class now
+const batman = new SuperHero('batman');
+console.log(batman.getName());
+batman.setName('Bruce-wayne');
+console.log(batman.getName());
+
+//create another instance of the class
+const superman = new SuperHero('superman');
+console.log(superman.getName());
+superman.setName('Henry-Cavill');
+console.log(superman.getName());
+```
