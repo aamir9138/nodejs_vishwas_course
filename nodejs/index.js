@@ -22,17 +22,34 @@
 // const newSuperHero = require('./superHero');
 // console.log(newSuperHero.getName());
 
-// when the module is exported as a class then
-const SuperHero = require('./superHero');
+// // when the module is exported as a class then
+// const SuperHero = require('./superHero');
 
-// create an instance of class now
-const batman = new SuperHero('batman');
-console.log(batman.getName());
-batman.setName('Bruce-wayne');
-console.log(batman.getName());
+// // create an instance of class now
+// const batman = new SuperHero('batman');
+// console.log(batman.getName());
+// batman.setName('Bruce-wayne');
+// console.log(batman.getName());
 
-//create another instance of the class
-const superman = new SuperHero('superman');
-console.log(superman.getName());
-superman.setName('Henry-Cavill');
-console.log(superman.getName());
+// //create another instance of the class
+// const superman = new SuperHero('superman');
+// console.log(superman.getName());
+// superman.setName('Henry-Cavill');
+// console.log(superman.getName());
+
+/* Down Below is about different import and export patterns lecture 14 */
+
+// // for single import
+// const add = require('./math');
+// console.log(add(7, 7));
+
+// // for multiple function imports
+// const math = require('./math');
+// console.log(math.add(2, 3));
+// console.log(math.subtract(5, 1));
+
+// // we can destructure the math object as below
+// const math = require('./math');
+// const { add, subtract } = math;
+// console.log(add(2, 3));
+// console.log(subtract(5, 1));

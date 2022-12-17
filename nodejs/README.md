@@ -359,3 +359,97 @@ console.log(superman.getName());
 superman.setName('Henry-Cavill');
 console.log(superman.getName());
 ```
+
+### Import and Export patterns in projects
+
+we will describe a number of patterns used projects code bases online for Import and export
+
+1. for single function export and import
+
+```
+// for single import
+const add = require('./math');
+console.log(add(7, 7));
+
+// math.js file
+const add = (a, b) => {
+  return a + b;
+};
+module.exports = add;
+```
+
+2. export the method as an object
+
+```
+/* different import export patterns */
+// for multiple function exporting as an object
+
+const add = (a, b) => {
+  return a + b;
+};
+
+const subtract = (a, b) => {
+  return a - b;
+};
+
+// exporting functions as an object
+module.exports = {
+  add: add,
+  subtract: subtract,
+};
+```
+
+3. ES6 shorthand for the exported object
+
+```
+// ES6 shorthand for the above object
+module.exports = {
+  add,
+  subtract,
+};
+```
+
+4. imported and used the functions in index.js file
+
+```
+/* Down Below is about different import and export patterns lecture 14 */
+const math = require('./math');
+console.log(math.add(2, 3));
+console.log(math.subtract(5, 1));
+```
+
+5. we can also export each function separately as below
+
+```
+// export each function separately
+module.exports.add = (a, b) => {
+  return a + b;
+};
+
+module.exports.subtract = (a, b) => {
+  return a - b;
+};
+```
+
+5. we can remove the module from above and can write exports.add and exports.subtract only. it will work. so exports is a reference to the module.exports object. but in some cases it can cause bug. so the best practice is to use module.exports.add and module.exports.subtract
+
+```
+// export each function separately without module but is not a good practise
+exports.add = (a, b) => {
+  return a + b;
+};
+
+exports.subtract = (a, b) => {
+  return a - b;
+};
+```
+
+6. we can also destructure the math object at the import as below
+
+```
+// we can destructure the math object as below
+const math = require('./math');
+const { add, subtract } = math;
+console.log(add(2, 3));
+console.log(subtract(5, 1));
+```

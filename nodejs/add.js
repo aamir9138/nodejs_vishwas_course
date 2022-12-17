@@ -5,7 +5,7 @@
 // console.log(sum);
 
 // Module Exports to reuse the function as many times as we want
-const add = (a, b) => {
-  return a + b;
-};
-module.exports = add;
+// const add = (a, b) => {
+//   return a + b;
+// };
+// module.exports = add;
