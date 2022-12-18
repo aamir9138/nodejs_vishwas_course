@@ -1,4 +1,4 @@
-/* different import export patterns */
+/* different import export patterns lecture 14*/
 
 // const add = (a, b) => {
 //   return a + b;
@@ -32,11 +32,21 @@
 //   return a - b;
 // };
 
-// 5. export each function separately without module but is not a good practise
-exports.add = (a, b) => {
+// // 5. export each function separately without module but is not a good practise
+// exports.add = (a, b) => {
+//   return a + b;
+// };
+
+// exports.subtract = (a, b) => {
+//   return a - b;
+// };
+
+/* module.exports vs exports lecture 15*/
+const add = (a, b) => {
   return a + b;
 };
 
-exports.subtract = (a, b) => {
+const subtract = (a, b) => {
   return a - b;
 };
+exports = { add, subtract };

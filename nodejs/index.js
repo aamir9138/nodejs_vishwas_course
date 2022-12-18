@@ -53,3 +53,10 @@
 // const { add, subtract } = math;
 // console.log(add(2, 3));
 // console.log(subtract(5, 1));
+
+/* module.exports vs exports lecture 15*/
+
+// for multiple function imports
+const math = require('./math');
+console.log(math.add(2, 3));
+console.log(math.subtract(5, 1));

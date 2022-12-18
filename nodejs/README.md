@@ -453,3 +453,194 @@ const { add, subtract } = math;
 console.log(add(2, 3));
 console.log(subtract(5, 1));
 ```
+
+### module.exports vs exports reasoning
+
+1. create object-reference.js file
+2. write this code in the file and run node object-reference.js
+3. so we will get changes in obj1 even though we make changes in obj2. this is because when we copy one object to another they both point to the same memory location. changes in one will make the same changes in another
+
+```
+/* module.exports vs export lecture 15 */
+const obj1 = {
+  name: 'Bruce-wayne',
+};
+
+const obj2 = obj1;
+obj2.name = 'Clark-Kent';
+
+console.log(obj1.name); // Clark-kent because object pass by reference
+```
+
+4. now in the below case if change the receiving obj2 object to `let` and then assign another object to it. the same reference to one object is broken.
+
+```
+// now in the below case if change the receiving obj2 object to let and then assign another object to it. the same reference to one object is broken.
+const obj1 = {
+  name: 'Bruce-wayne',
+};
+let obj2 = obj1;
+obj2 = {
+  name: 'Clark-kent',
+};
+console.log(obj1.name); // Bruce-wayne
+```
+
+5. if we write exports object like below it will give error. with module.exports will be fine.
+
+```
+/* module.exports vs exports lecture 15*/
+const add = (a, b) => {
+  return a + b;
+};
+
+const subtract = (a, b) => {
+  return a - b;
+};
+exports = {  // only exports is not correct
+  add: add,
+  subtract: subtract,
+};
+```
+
+---
+
+<!-- ES Modules lecture 16 -->
+
+## CommonJS last comments
+
+1. Each file is treated as a module
+2. Variables, functions, classes, etc. are not accessible to other files by default
+3. Explicitly tell the module system which parts of your code should be exported via `module.exports` or `exports`
+4. To import code into a file, use the require() function.
+
+---
+
+## ES Modules
+
+1. another method for importing and exporting modules besides CommonJS method.
+2. At the time Node.js was created, there was no built-in module system in javascript
+3. Node.js defaulted to commonJS as its module system.
+4. As of ES2015, JavasScript does have a standardized module system as part of the language itself
+5. That module system is called EcmaScript Modules or ES Modules or ESM for short
+
+### file extension for ES Module
+
+The file extension is `.mjs` and not `.js`
+
+### import and export of ES Module with examples
+
+1. create a file `main.mjs`
+2. create a second file `math-esm.mjs` for the math module
+3. within the file the code now will be
+
+```
+/* ES Modules lecture 16 */
+const add = (a, b) => {
+  return a + b;
+};
+// in ES Module we export as below
+export default add;
+```
+
+4. so the important line is export here. we export like this in ES Modules
+5. and import this module in `main.mjs` file as below
+
+```
+/* ES Modules lecture 16 */
+
+// in ES Modules we import as below
+import add from './math-esm.mjs';
+
+console.log(add(4, 3));
+```
+
+6. in terminal run `node main.mjs`
+7. second pattern of export is as below
+
+```
+// second pattern of export
+export default (a, b) => {
+  return a + b;
+};
+```
+
+8. third pattern if we have more than one function and want to export the code is below
+
+```
+// third pattern of export for more than one function
+const add = (a, b) => {
+  return a + b;
+};
+
+const subtract = (a, b) => {
+  return a - b;
+};
+
+export default {
+  add,
+  subtract,
+};
+```
+
+and the `main.mjs` would be as below
+
+```
+// third pattern for multiple function import
+import math from './math-esm.mjs';
+
+console.log(math.add(5, 5));
+console.log(math.subtract(5, 5));
+```
+
+9. we can also destructure the imports as below
+
+```
+// destructing the imports
+import math from './math-esm.mjs';
+
+const { add, subtract } = math;
+console.log(add(5, 5));
+console.log(subtract(5, 5));
+```
+
+10. we can import the exported function by any name
+11. fourth pattern of exporting and importing is as below
+
+```
+// fourth pattern of export for more than one function
+export const add = (a, b) => {
+  return a + b;
+};
+
+export const subtract = (a, b) => {
+  return a - b;
+};
+
+// fourth pattern of importing
+import * as math from './math-esm.mjs';
+
+const { add, subtract } = math;
+console.log(add(2, 4));
+console.log(subtract(6, 5));
+```
+
+12. fifth pattern of import is to destructure at the import line itselt as below
+
+```
+// fifth pattern of importing
+import { add, subtract } from './math-esm.mjs';
+console.log(add(2, 4));
+console.log(subtract(6, 5));
+```
+
+### ES Modules Summary
+
+1. ES Modules is the ECMAScript standart for modules
+2. It was introduced with ES2015
+3. Node.js 14 and above support ES Modules
+4. Instead of `module.exports`, we use the `export` keyword
+5. The export can be default or named
+6. We import the exported variables or functions using the import keyword
+7. if it is a default export, we can assign any name while importing
+8. if it is a named export, the import name must be the same
