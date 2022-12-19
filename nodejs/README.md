@@ -644,3 +644,57 @@ console.log(subtract(6, 5));
 6. We import the exported variables or functions using the import keyword
 7. if it is a default export, we can assign any name while importing
 8. if it is a named export, the import name must be the same
+
+## Importing JSON lecture 17
+
+- JSON -- JavaScript Object Notation
+- A data interchange format commonly used with web servers
+- create a file `data.json`
+
+```
+{
+  "name": "Bruce Wayne",
+  "address": {
+    "street": "Wayne Manor",
+    "city": "Gotham"
+  }
+}
+```
+
+- in `index.js` import the JSON data as below
+
+```
+/* Importing JSON lecture 17 */
+const data = require('./data.json');
+console.log(data);
+```
+
+- `nodex index.js` the result is
+
+```
+$ node index
+{
+  name: 'Bruce Wayne',
+  address: { street: 'Wayne Manor', city: 'Gotham' }
+}
+```
+
+- so the JSON format of data is has been parsed to the Object. it is the default behaviour `require` will convert the data in JSON to JavaScript object
+- we can now access the name as below
+
+```
+console.log(data.name)
+```
+
+- it is better to always use extension when require JSON data `require('./data.json')`
+
+### watch mode
+
+- in version 18 node introduces the watch mode
+- in the terminal run the `index` file by watch mode
+
+```
+node --watch index
+```
+
+- so now if we update anything and save the file the changes will appear immediately. no need to run everytime

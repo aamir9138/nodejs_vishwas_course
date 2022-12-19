@@ -56,7 +56,17 @@
 
 /* module.exports vs exports lecture 15*/
 
-// for multiple function imports
-const math = require('./math');
-console.log(math.add(2, 3));
-console.log(math.subtract(5, 1));
+// // for multiple function imports
+// const math = require('./math');
+// console.log(math.add(2, 3));
+// console.log(math.subtract(5, 1));
+
+// /* Importing JSON lecture 17 */
+// const data = require('./data.json');
+// console.log(data);
+// console.log(data.name);
+
+// watch mode
+// console.log("Hello world")
+// now update
+console.log('Hello world of enemies');
