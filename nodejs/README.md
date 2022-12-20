@@ -698,3 +698,24 @@ node --watch index
 ```
 
 - so now if we update anything and save the file the changes will appear immediately. no need to run everytime
+
+## lecture 18 Modules
+
+### Types of Modules
+
+1. Local modules - (done in previous lessons)
+2. Built-in modules - (we will do now in this section)
+3. Third party modules
+
+### Built-in Modules
+
+- Modules that node.js ships with
+- Also referred to as core modules
+- we still need to import it before we can use it
+- the most commonly used are
+  1. path
+  2. events
+  3. fs
+  4. stream
+  5. http
+- the source code for these modules are present in the `lib folder`
