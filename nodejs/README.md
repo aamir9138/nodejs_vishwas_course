@@ -719,3 +719,167 @@ node --watch index
   4. stream
   5. http
 - the source code for these modules are present in the `lib folder`
+
+## lecture 19 Path Module
+
+- The path module provides utilities for working with file and directory paths
+- we can load the module by the below syntax in `index.js` file
+
+```
+/* lecture 19 Path Module */
+
+// we can load the path module as below
+const path = require("node:path")
+```
+
+- the `Path Module` has 14 different properties and methods. but we will use here only 7
+- we will use the readily available `__filename` and `__dirname`
+
+```
+console.log(__filename);
+// C:\Users\muhammada\Desktop\react_training\vishwas_react_course\nodejs_vishwas_course\nodejs\index.js
+console.log(__dirname);
+//C:\Users\muhammada\Desktop\react_training\vishwas_react_course\nodejs_vishwas_course\nodejs
+```
+
+- `__filename` show the file path of index.js file
+- `__dirname` shows the directory path of the index.js present
+
+### basename in Path Module
+
+- basename represents the last portion of `__filename` and `__dirname`.
+
+```
+console.log(path.basename(__filename));
+// index.js
+console.log(path.basename(__dirname));
+// nodejs
+```
+
+### extname in Path Module
+
+- extname represents the extension of the files
+
+```
+// extname represent the extension of files
+console.log(path.extname(__filename));
+// .js
+console.log(path.extname(__dirname));
+// it will show empty string as it is a directory with no extension
+```
+
+### parse in Path Module
+
+- we have a `parse` method which returns an object which represents the significant properties of the path
+
+```
+// parse returns an object which represents the significant properties of the path
+console.log(path.parse(__filename));
+// {
+//   root: 'C:\\',
+//   dir: 'C:\\Users\\muhammada\\Desktop\\react_training\\vishwas_react_course\\nodejs_vishwas_course\\nodejs',
+//   base: 'index.js',
+//   ext: '.js',
+//   name: 'index'
+// }
+```
+
+- we can use these properties using the dot notation on parse like `path.parse.name`
+
+### format in Path Module
+
+- it is converting the parsed object back to the original path. the parameter to `format` will be something like `path.format(path.parse(__filename))`
+
+```
+// format is converting the parsed object back to the original path. the parameter to `format` will be something like `path.format(path.parse(__filename))`
+console.log(path.format(path.parse(__filename)));
+```
+
+- so basically it is converting the below thing
+
+```
+ {
+   root: 'C:\\',
+   dir: 'C:\\Users\\muhammada\\Desktop\\react_training\\vishwas_react_course\\nodejs_vishwas_course\\nodejs',
+   base: 'index.js',
+   ext: '.js',
+   name: 'index'
+ }
+```
+
+to
+
+```
+C:\Users\muhammada\Desktop\react_training\vishwas_react_course\nodejs_vishwas_course\nodejs\index.js
+```
+
+### isAbsolute in Path Module
+
+- it will return either `true` or `false` depends on if the path is Absolute or relative.
+
+```
+// isAbsolute
+console.log(path.isAbsolute(__filename)); // true
+console.log(path.isAbsolute('./data.json')); // false
+```
+
+### join in Path Module
+
+- `join` joins all the given path segments togather using the platform specific separator (i.e Mac or windows etc) as delimiter and than normalizes the resulting path
+
+```
+// path.join
+console.log(path.join('folder1', 'folder2', 'index.html'));
+// folder1\folder2\index.html
+console.log(path.join('\folder1', 'folder2', 'index.html'));
+// ♀older1\folder2\index.html  (this is weird, so we have to use forward slash only, but for windows the output will change to backward slash)
+console.log(path.join('/folder1', 'folder2', 'index.html'));
+// \folder1\folder2\index.html
+console.log(path.join('/folder1', '//folder2', 'index.html'));
+// \folder1\folder2\index.html (normalizes the path)
+console.log(path.join('/folder1', '//folder2', '../index.html'));
+// \folder1\index.html (normalizes the path and jumps one folder up)
+console.log(path.join(__dirname, 'data.json'));
+// C:\Users\muhammada\Desktop\react_training\vishwas_react_course\nodejs_vishwas_course\nodejs\data.json
+```
+
+### resolves in Path Modules
+
+- `path.resolves` method is a method resolves `sequence of paths` or `path segments` into an absolute path
+- secanrios :
+  1. so if we don't have a forward slash it will take the current directory and add the segments
+  2. if we have backward slash with segments it is wrong. even on windows we have to use the forward slash and it will return the path as backward slashes for windows
+  3. if we have a forward slash it will create an absolute path from there
+  4. in the segments if we have forward slash to the right ones also. it will resolve an absolute path from the right ones
+
+```
+// path.resolve
+console.log(path.resolve('folder1', 'folder2', 'index.html'));
+// C:\Users\muhammada\Desktop\react_training\vishwas_react_course\nodejs_vishwas_course\nodejs\folder1\folder2\index.html
+// (so if we don't have a forward slash it will take the current directory and add the segments)
+console.log(path.resolve('\folder1', 'folder2', 'index.html'));
+// C:\Users\muhammada\Desktop\react_training\vishwas_react_course\nodejs_vishwas_course\nodejs\♀older1\folder2\index.html
+// (if we have backward slash with segments it is wrong. even on windows we have to use the forward slash and it will return the path as backward slashes for windows)
+console.log(path.resolve('/folder1', 'folder2', 'index.html'));
+// C:\folder1\folder2\index.html
+// (if we have a forward slash it will create an absolute path from there)
+console.log(path.resolve('/folder1', '//folder2', 'index.html'));
+// C:\folder2\index.html
+console.log(path.resolve('/folder1', '//folder2', '../index.html'));
+// C:\index.html
+console.log(path.resolve(__dirname, 'data.json'));
+// C:\Users\muhammada\Desktop\react_training\vishwas_react_course\nodejs_vishwas_course\nodejs\data.json
+```
+
+## "node:" Protocol
+
+- we can omit `node:` while importing the `path` module in the first line. but using it has benefits
+
+```
+const path = require("node:path")
+```
+
+- the benefits are :
+  1. Makes it perfectly clear that the import is a Node.js builtin module
+  2. Makes the import identifier a valid absolute URL
+  3. Avoids conflicts for future Node.js built-in modules
