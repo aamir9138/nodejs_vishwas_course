@@ -883,3 +883,75 @@ const path = require("node:path")
   1. Makes it perfectly clear that the import is a Node.js builtin module
   2. Makes the import identifier a valid absolute URL
   3. Avoids conflicts for future Node.js built-in modules
+
+## lecture 20 Callback Pattern
+
+- before moving to the next in-built module we will discuss the Callback Pattern first
+
+### Callbacks
+
+- in JavaScript, functions are first class objects
+- A function can be passes as an argument to a function
+- A function can also be returned as values from other other functions
+
+```
+function greet(name){
+  console.log(`Hello ${name}`)
+}
+
+function higherOrderFunction(callback){
+  const name = 'Vishwas'
+  callback(name)
+}
+
+higherOrderFunction(greet)
+```
+
+- Any function that is passed as an argument to another function is called a `callback function` in Javascript
+
+## Higher order function
+
+- The function which accepts a function as an argument or returns a function is called a higher order function
+
+## Callbacks function types
+
+1. synchronous Callback functions
+2. Asynchronous Callback functions
+
+### Synchronous callbacks
+
+A callback which executed imediately is called a synchronous callback
+
+```
+function greet(name){
+  console.log(`Hello ${name}`)
+}
+
+function higherOrderFunction(callback){
+  const name = 'Vishwas'
+  callback(name)
+}
+
+higherOrderFunction(greet)
+```
+
+The below higher order function are showing the higherorderfunction with synchronous callbacks
+
+```
+let numbers = [1,2,3,4,5,6]
+numbers.sort((a,b) => a -b)
+numbers.map(n => n*2)
+numbers.filter(n => n%2 === 0)
+```
+
+### Asynchronous callbacks
+
+- A callback that is often used to continue or resume code execution after an asynchronous operation has completed.
+- so in Async world Callbacks are used to delay the execution of a function until a particular time or event has occurred
+- most of the module in Node.js has an asynchronous nature to prevent blocking of execution
+- for example reading data from a file, fetching data from a database or handling a network request
+
+### Asynchronous callbacks in browser
+
+- our first example in browser is an event handler as below picture
+  ![Asynchronous callbacks in browser](./pictures/asynchronous_callbacks_in_browser.PNG)
