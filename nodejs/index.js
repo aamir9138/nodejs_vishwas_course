@@ -74,7 +74,7 @@
 /* lecture 19 Path Module */
 
 // we can load the path module as below
-const path = require('node:path');
+// const path = require('node:path');
 
 // console.log(__filename);
 // // C:\Users\muhammada\Desktop\react_training\vishwas_react_course\nodejs_vishwas_course\nodejs\index.js
@@ -124,16 +124,78 @@ const path = require('node:path');
 // console.log(path.join(__dirname, 'data.json'));
 // // C:\Users\muhammada\Desktop\react_training\vishwas_react_course\nodejs_vishwas_course\nodejs\data.json
 
-// path.resolve
-console.log(path.resolve('folder1', 'folder2', 'index.html'));
-// C:\Users\muhammada\Desktop\react_training\vishwas_react_course\nodejs_vishwas_course\nodejs\folder1\folder2\index.html
-console.log(path.resolve('\folder1', 'folder2', 'index.html'));
-// C:\Users\muhammada\Desktop\react_training\vishwas_react_course\nodejs_vishwas_course\nodejs\♀older1\folder2\index.html
-console.log(path.resolve('/folder1', 'folder2', 'index.html'));
-// C:\folder1\folder2\index.html
-console.log(path.resolve('/folder1', '//folder2', 'index.html'));
-// C:\folder2\index.html
-console.log(path.resolve('/folder1', '//folder2', '../index.html'));
-// C:\index.html
-console.log(path.resolve(__dirname, 'data.json'));
-// C:\Users\muhammada\Desktop\react_training\vishwas_react_course\nodejs_vishwas_course\nodejs\data.json
+// // path.resolve
+// console.log(path.resolve('folder1', 'folder2', 'index.html'));
+// // C:\Users\muhammada\Desktop\react_training\vishwas_react_course\nodejs_vishwas_course\nodejs\folder1\folder2\index.html
+// console.log(path.resolve('\folder1', 'folder2', 'index.html'));
+// // C:\Users\muhammada\Desktop\react_training\vishwas_react_course\nodejs_vishwas_course\nodejs\♀older1\folder2\index.html
+// console.log(path.resolve('/folder1', 'folder2', 'index.html'));
+// // C:\folder1\folder2\index.html
+// console.log(path.resolve('/folder1', '//folder2', 'index.html'));
+// // C:\folder2\index.html
+// console.log(path.resolve('/folder1', '//folder2', '../index.html'));
+// // C:\index.html
+// console.log(path.resolve(__dirname, 'data.json'));
+// // C:\Users\muhammada\Desktop\react_training\vishwas_react_course\nodejs_vishwas_course\nodejs\data.json
+
+/* lecture 21 Events Module (Built-in node modules) */
+// const EventEmitter = require('node:events');
+// const emitter = new EventEmitter();
+// emitter.on('order-pizza', () => { // responding the the event
+//   console.log('order received - baking a pizza');
+// });
+// emitter.emit('order-pizza'); // dispatching event
+
+// // passing the arguments with event
+// const EventEmitter = require('node:events');
+// const emitter = new EventEmitter();
+
+// emitter.on('order-pizza', (size, toppings) => {
+//   // responding the the event
+//   console.log(`order received - baking a ${size} pizza with ${toppings}`);
+// });
+
+// emitter.on('order-pizza', (size) => {
+//   if (size === 'large') {
+//     console.log('Serving complementary drinks');
+//   }
+// });
+// emitter.emit('order-pizza', 'large', 'mashrooms'); // dispatching event
+
+// // Registering multiple listener for the same event
+// const EventEmitter = require('node:events');
+// const emitter = new EventEmitter();
+
+// emitter.on('order-pizza', (size, toppings) => {
+//   // responding the the event
+//   console.log(`order received - baking a ${size} pizza with ${toppings}`);
+// });
+
+// emitter.on('order-pizza', (size) => {
+//   if (size === 'large') {
+//     console.log('Serving complementary drinks');
+//   }
+// });
+
+// console.log("Do work before event occur in the system")
+
+// emitter.emit('order-pizza', 'large', 'mashrooms'); // dispatching event
+
+// Listeners waiting for the event to occur
+const EventEmitter = require('node:events');
+const emitter = new EventEmitter();
+
+emitter.on('order-pizza', (size, toppings) => {
+  // responding the the event
+  console.log(`order received - baking a ${size} pizza with ${toppings}`);
+});
+
+emitter.on('order-pizza', (size) => {
+  if (size === 'large') {
+    console.log('Serving complementary drinks');
+  }
+});
+
+console.log('Do work before event occur in the system');
+
+emitter.emit('order-pizza', 'large', 'mashrooms'); // dispatching event

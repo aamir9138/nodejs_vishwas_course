@@ -955,3 +955,112 @@ numbers.filter(n => n%2 === 0)
 
 - our first example in browser is an event handler as below picture
   ![Asynchronous callbacks in browser](./pictures/asynchronous_callbacks_in_browser.PNG)
+
+- so from the picture above as you can see the `callback` function will only execute when the user clicks the button.
+
+## lecture 21 Events Module (Built-in Module)
+
+- The events module allows us to work with events in Node.js
+- An event is an action or an occurrence that has happened in our application that we can respond to
+- Using the events module, we can dispatch our own custom events and respond to those custom events in a non-blocking manner
+
+### Events Module - non-technical scenario
+
+- Let's say you're feeling hungry and head out to Dominos to have pizza
+- At the counter, you place your order for a pizza
+- When you place the order, the line cook sees the order on the screen and bakes the pizza for you
+- we can relate the above steps to the events
+
+1. in the above scenario order being placed is the event
+2. baking a pizza is a response to that event
+
+### Event Module - in coding
+
+1. first import the built-in Event module `const EventEmitter = require("node:events")`
+2. why are we calling it `EventEmitter` because while importing the events module it returns a class called EventEmitter which encapsulates the functionalites to emit an event and respond to that event.
+3. instantiate the return class now. `const emitter = new EventEmitter()`
+4. now this `emitter` object can emit events.
+5. to emit an event use the `emit` method on the `emitter` object. `emitter.emit()`
+6. the method accepts the event name as argument. so lets emit an event call `order-pizza`.
+
+```
+emitter.emit("order-pizza")
+```
+
+7. to respond to this `order-pizza` event. we need to register a listener. for that we use the `on` method on the `emitter` object.
+8. `emitter.on()` accepts two parameters. the first parameter is the `event-name`. the second parameter is the `listener`.
+9. a listener is a callback function that gets executed when the corresponding event is emitted.
+10. from the previous lecture we know that a callback function allows us to delay execution till the event occur.
+11. here the callback function will simply output a console log statement.
+12. the `emitter.emit` must be below in the code that `emitter.on`
+
+```
+/* lecture 21 Events Module (Built-in node modules) */
+const EventEmitter = require('node:events');
+const emitter = new EventEmitter();
+emitter.on('order-pizza', () => { // responding the the event
+  console.log('order received - baking a pizza');
+});
+emitter.emit('order-pizza'); // dispatching event
+```
+
+13. while emitting we can pass arguments in the `emitter.emit`
+14. pass arguments as the `size` of `large` and `toppings` of `mashrooms`
+15. the listener function in `emitter.on` will automatically receive the arguments.
+
+```
+// passing the arguments with event
+const EventEmitter = require('node:events');
+const emitter = new EventEmitter();
+emitter.on('order-pizza', (size, toppings) => {
+  // responding the the event
+  console.log(`order received - baking a ${size} pizza with ${toppings}`);
+});
+emitter.emit('order-pizza', 'large', 'mashrooms'); // dispatching event
+```
+
+16. we can also register multiple listener for the same event.
+
+```
+// Registering multiple listener for the same event
+const EventEmitter = require('node:events');
+const emitter = new EventEmitter();
+
+emitter.on('order-pizza', (size, toppings) => {
+  // responding the the event
+  console.log(`order received - baking a ${size} pizza with ${toppings}`);
+});
+
+emitter.on('order-pizza', (size) => {
+  if (size === 'large') {
+    console.log('Serving complementary drinks');
+  }
+});
+emitter.emit('order-pizza', 'large', 'mashrooms'); // dispatching event
+```
+
+### Important to note
+
+- By writing this type of code we are not blocking the execution. events allow us to write the code in non-blocing manner.
+- so if we have write a function say a console.log statement. it will execute first and the listener will listen for the events to occur. so when the emitter emits the event the event listener will execute only. so in a way listeners are always waiting for the events to occur to execute.
+
+```
+// Listeners waiting for the event to occur
+const EventEmitter = require('node:events');
+const emitter = new EventEmitter();
+
+emitter.on('order-pizza', (size, toppings) => {
+  // responding the the event
+  console.log(`order received - baking a ${size} pizza with ${toppings}`);
+});
+
+emitter.on('order-pizza', (size) => {
+  if (size === 'large') {
+    console.log('Serving complementary drinks');
+  }
+});
+
+console.log("Do work before event occur in the system")
+
+emitter.emit('order-pizza', 'large', 'mashrooms'); // dispatching event
+```
