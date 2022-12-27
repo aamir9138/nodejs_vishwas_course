@@ -1317,3 +1317,14 @@ const buffer = new Buffer.from('Vishwas'); // here buffer is created with 6 slot
 buffer.write('codevolution');
 console.log(buffer.toString()); // codevol (as we have only 7 available slots while creation)
 ```
+
+## lecture 25 Asynchronous JavaScript
+
+![asynchronous javascript](./pictures//asynchronous_javascript.PNG)
+![javascript blocking](./pictures/javascript_blocking.PNG)
+![javascript single threaded](./pictures//javascript_singlethreaded.PNG)
+![asynchronous javascript continued](./pictures/asynchronous_javascript_continued.PNG)
+
+### Just JavaScript is not enough for asynchronous code
+
+![webbrowser and nodejs for asynchronous](./pictures//webbrowser_and_nodejs_for_asynchronous.PNG)
