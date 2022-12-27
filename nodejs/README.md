@@ -1232,3 +1232,35 @@ pizzaShop.on('order', (size, toppings) => {
 pizzaShop.order('large', 'mashrooms');
 pizzaShop.displayOrderNumber();
 ```
+
+## lecture 23 Character Sets and Encoding
+
+first understand binary data
+
+### Binary data
+
+An image is presented for this.
+
+![Binary Data](./pictures/binary_data.PNG)
+
+### Character in binary format
+
+V?
+
+- computer will first convert the character to a number, then conbert that number to its binary representation
+- computers will first convert V to a number that represents V.
+- in console of browser if we write `"V".charCodeAt()` it will gives as `86`
+- 86 is the numeric representation of character V.
+- it is also called chararcter code.
+
+### how does computer know
+
+how does computer know which character is represented by which number? for that we use `Character Sets`
+
+### Character Sets
+
+![character sets](./pictures/character_sets.PNG)
+
+### Character Encoding
+
+![character encoding](./pictures//character_encoding.PNG)
