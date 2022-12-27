@@ -54,7 +54,7 @@ JavaScript runtime is an environment which provides all the necessary components
 ### Few words about Node.js
 
 - Node.js is not a language, it is not a framework
-- Node.js runtime unlike the browser runtime doesnot has access to the web apis. there is no window or document object when working with Node.js
+- Node.js runtime unlike the browser runtime doesnot has access to the web apis. there is no `window` or `document` object when working with Node.js
 - with Nodejs we cannot interact with DOM, or other Web Platform Apis like Cookies. we don't have the document, window and all the other objects that are provided by the browser.
 - with browser we don't have all the nice APIs that Nodejs provides through its modules. for example filesystem access functionality
 - with Nodejs you control the envirnment
@@ -138,7 +138,9 @@ Modules that we create and use in our Applications
   // index.js file
   require('./add');
   console.log('Hello world from index.js');
+```
 
+```
   // add.js file below
   const add = (a, b) => {
   return a + b;
@@ -199,7 +201,9 @@ The content two files are down below
 ```
   const superHero = 'Batman';
   console.log(superHero);
+```
 
+```
   const superHero = 'Superman';
   console.log(superHero);
 ```
@@ -214,6 +218,9 @@ The content two files are down below
     const superHero = 'Superman';
     console.log(superHero);
   })();
+```
+
+```
   (function () {
     const superHero = 'Batman';
     console.log(superHero);
@@ -278,7 +285,7 @@ console.log(superHero);
 })
 ```
 
-### Module Caching
+## lecture 13 Module Caching
 
 1. create a file `superHero.js`
 2. create a class in it `class SuperHero`
@@ -360,7 +367,7 @@ superman.setName('Henry-Cavill');
 console.log(superman.getName());
 ```
 
-### Import and Export patterns in projects
+## lecture 14 Import and Export patterns in projects
 
 we will describe a number of patterns used projects code bases online for Import and export
 
@@ -370,7 +377,9 @@ we will describe a number of patterns used projects code bases online for Import
 // for single import
 const add = require('./math');
 console.log(add(7, 7));
+```
 
+```
 // math.js file
 const add = (a, b) => {
   return a + b;
@@ -454,10 +463,10 @@ console.log(add(2, 3));
 console.log(subtract(5, 1));
 ```
 
-### module.exports vs exports reasoning
+## lecture 15 module.exports vs exports reasoning
 
-1. create object-reference.js file
-2. write this code in the file and run node object-reference.js
+1. create `object-reference.js` file
+2. write this code in the file and run `node object-reference.js`
 3. so we will get changes in obj1 even though we make changes in obj2. this is because when we copy one object to another they both point to the same memory location. changes in one will make the same changes in another
 
 ```
@@ -507,7 +516,7 @@ exports = {  // only exports is not correct
 
 <!-- ES Modules lecture 16 -->
 
-## CommonJS last comments
+### CommonJS last comments
 
 1. Each file is treated as a module
 2. Variables, functions, classes, etc. are not accessible to other files by default
@@ -516,7 +525,7 @@ exports = {  // only exports is not correct
 
 ---
 
-## ES Modules
+## lecture 16 ES Modules
 
 1. another method for importing and exporting modules besides CommonJS method.
 2. At the time Node.js was created, there was no built-in module system in javascript
@@ -640,12 +649,12 @@ console.log(subtract(6, 5));
 2. It was introduced with ES2015
 3. Node.js 14 and above support ES Modules
 4. Instead of `module.exports`, we use the `export` keyword
-5. The export can be default or named
+5. The export can be `default` or `named export`
 6. We import the exported variables or functions using the import keyword
-7. if it is a default export, we can assign any name while importing
-8. if it is a named export, the import name must be the same
+7. if it is a `default export`, we can assign any name while importing
+8. if it is a `named export`, the import name must be the same
 
-## Importing JSON lecture 17
+## lecture 17 Importing JSON
 
 - JSON -- JavaScript Object Notation
 - A data interchange format commonly used with web servers
@@ -909,11 +918,11 @@ higherOrderFunction(greet)
 
 - Any function that is passed as an argument to another function is called a `callback function` in Javascript
 
-## Higher order function
+### Higher order function
 
 - The function which accepts a function as an argument or returns a function is called a higher order function
 
-## Callbacks function types
+### Callbacks function types
 
 1. synchronous Callback functions
 2. Asynchronous Callback functions
@@ -954,6 +963,7 @@ numbers.filter(n => n%2 === 0)
 ### Asynchronous callbacks in browser
 
 - our first example in browser is an event handler as below picture
+
   ![Asynchronous callbacks in browser](./pictures/asynchronous_callbacks_in_browser.PNG)
 
 - so from the picture above as you can see the `callback` function will only execute when the user clicks the button.
@@ -1041,7 +1051,7 @@ emitter.emit('order-pizza', 'large', 'mashrooms'); // dispatching event
 
 ### Important to note
 
-- By writing this type of code we are not blocking the execution. events allow us to write the code in non-blocing manner.
+- By writing this type of code we are not blocking the execution. events allow us to write the code in non-blocking manner.
 - so if we have write a function say a console.log statement. it will execute first and the listener will listen for the events to occur. so when the emitter emits the event the event listener will execute only. so in a way listeners are always waiting for the events to occur to execute.
 
 ```
@@ -1063,4 +1073,162 @@ emitter.on('order-pizza', (size) => {
 console.log("Do work before event occur in the system")
 
 emitter.emit('order-pizza', 'large', 'mashrooms'); // dispatching event
+```
+
+## lecture 22 Extending from EventEmitter
+
+in this lecture we will know how to built our own module that builds on top of the `EventEmitter` class.
+
+1. create `pizza-shop.js` file
+2. create a class `PizzaShop` and export it as below
+
+```
+/* lecture 22 Extending from EventEmitter */
+class PizzaShop {
+  constructor() {
+    this.orderNumber = 0;
+  }
+
+  order() {
+    this.orderNumber++;
+  }
+  displayOrderNumber() {
+    console.log(`Current order number is : ${this.orderNumber}`);
+  }
+}
+// export the class
+module.exports = PizzaShop;
+```
+
+3. in `index.js` import the class `PizzaShop`. now we can use the methods of `PizzaShop` class here.
+
+```
+/* lecture 22 Extending from EventEmitter */
+const PizzaShop = require('./pizza-shop');
+
+// instantiate the imported class
+const pizzaShop = new PizzaShop();
+
+// we can now use the methods of PizzaShop class using the instance pizzaShop
+pizzaShop.order();
+pizzaShop.displayOrderNumber(); // current order number: 1
+```
+
+so we have a PizzaShop class which has its own properties and methods. However we would like the shop to handle the orders using `event-driven architecture`. i.e using the events module. The solution for that is inheritance. in JavaScript we can extend one class to extend the functionality of another class.
+
+in our case `PizzaShop` class is going to inherit from the `EventEmitter` class.
+
+### inheriting EventEmitter class
+
+To inherit from EventEmitter class. follow the following steps.
+
+1. import `node:events` module. it will return an `EventEmitter` class
+
+```
+const EventEmitter = require("node:events")
+```
+
+2. extends `PizzaShop` from `EventEmitter` class
+
+```
+class PizzaShop extends EventEmitter{
+```
+
+3. invoke `super()` inside `constructor()`. This class base inheritance is a feature introduced in ES6.
+
+```
+// inheriting the PizzaShop class from EventEmitter class
+const EventEmitter = require("node:events")
+class PizzaShop extends EventEmitter{
+  constructor() {
+    super();
+    this.orderNumber = 0;
+  }
+
+  order() {
+    this.orderNumber++;
+  }
+  displayOrderNumber() {
+    console.log(`Current order number is : ${this.orderNumber}`);
+  }
+}
+// export the class
+module.exports = PizzaShop;
+```
+
+4. We can now use the EventEmitter functionality in PizzaShop class.
+
+```
+// inheriting the PizzaShop class from EventEmitter class
+const EventEmitter = require('node:events');
+class PizzaShop extends EventEmitter {
+  constructor() {
+    super();
+    this.orderNumber = 0;
+  }
+
+  order(size, toppings) {
+    this.orderNumber++;
+    this.emit('order', size, toppings);
+  }
+  displayOrderNumber() {
+    console.log(`Current order number is : ${this.orderNumber}`);
+  }
+}
+// export the class
+module.exports = PizzaShop;
+```
+
+The index.js file becomes now
+
+```
+/* lecture 22 Extending from EventEmitter */
+const PizzaShop = require('./pizza-shop');
+
+// instantiate the imported class
+const pizzaShop = new PizzaShop();
+pizzaShop.on('order', (size, toppings) => {
+  console.log(`order received - baking a ${size} pizza with ${toppings}`);
+});
+
+// we can now use the methods of PizzaShop class using the instance pizzaShop
+pizzaShop.order('large', 'mashrooms');
+pizzaShop.displayOrderNumber();
+```
+
+### complementary drink class
+
+previously when we have `large` pizza we will serve a complementary drink. for the same functionality we will create here a separate file `drink-machine.js` with `DrinkMachine` class and export the class.
+
+```
+class DrinkMachine {
+  serveDrink(size) {
+    if (size === 'large') {
+      console.log('Serving Complementary drink');
+    }
+  }
+}
+module.exports = DrinkMachine;
+```
+
+The `index.js` file will be
+
+```
+/* lecture 22 Extending from EventEmitter */
+// for DrinkMachine class
+const PizzaShop = require('./pizza-shop');
+const DrinkMachine = require('./drink-machine');
+
+// instantiate the imported class
+const pizzaShop = new PizzaShop();
+const drinkMachine = new DrinkMachine();
+
+pizzaShop.on('order', (size, toppings) => {
+  console.log(`order received - baking a ${size} pizza with ${toppings}`);
+  drinkMachine.serveDrink(size);
+});
+
+// we can now use the methods of PizzaShop class using the instance pizzaShop
+pizzaShop.order('large', 'mashrooms');
+pizzaShop.displayOrderNumber();
 ```

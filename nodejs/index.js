@@ -181,21 +181,52 @@
 
 // emitter.emit('order-pizza', 'large', 'mashrooms'); // dispatching event
 
-// Listeners waiting for the event to occur
-const EventEmitter = require('node:events');
-const emitter = new EventEmitter();
+// // Listeners waiting for the event to occur
+// const EventEmitter = require('node:events');
+// const emitter = new EventEmitter();
 
-emitter.on('order-pizza', (size, toppings) => {
-  // responding the the event
+// emitter.on('order-pizza', (size, toppings) => {
+//   // responding the the event
+//   console.log(`order received - baking a ${size} pizza with ${toppings}`);
+// });
+
+// emitter.on('order-pizza', (size) => {
+//   if (size === 'large') {
+//     console.log('Serving complementary drinks');
+//   }
+// });
+
+// console.log('Do work before event occur in the system');
+
+// emitter.emit('order-pizza', 'large', 'mashrooms'); // dispatching event
+
+// /* lecture 22 Extending from EventEmitter */
+// const PizzaShop = require('./pizza-shop');
+
+// // instantiate the imported class
+// const pizzaShop = new PizzaShop();
+// pizzaShop.on('order', (size, toppings) => {
+//   console.log(`order received - baking a ${size} pizza with ${toppings}`);
+// });
+
+// // we can now use the methods of PizzaShop class using the instance pizzaShop
+// pizzaShop.order('large', 'mashrooms');
+// pizzaShop.displayOrderNumber();
+
+/* lecture 22 Extending from EventEmitter */
+// for DrinkMachine class
+const PizzaShop = require('./pizza-shop');
+const DrinkMachine = require('./drink-machine');
+
+// instantiate the imported class
+const pizzaShop = new PizzaShop();
+const drinkMachine = new DrinkMachine();
+
+pizzaShop.on('order', (size, toppings) => {
   console.log(`order received - baking a ${size} pizza with ${toppings}`);
+  drinkMachine.serveDrink(size);
 });
 
-emitter.on('order-pizza', (size) => {
-  if (size === 'large') {
-    console.log('Serving complementary drinks');
-  }
-});
-
-console.log('Do work before event occur in the system');
-
-emitter.emit('order-pizza', 'large', 'mashrooms'); // dispatching event
+// we can now use the methods of PizzaShop class using the instance pizzaShop
+pizzaShop.order('large', 'mashrooms');
+pizzaShop.displayOrderNumber();
