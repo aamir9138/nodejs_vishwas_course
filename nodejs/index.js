@@ -213,20 +213,47 @@
 // pizzaShop.order('large', 'mashrooms');
 // pizzaShop.displayOrderNumber();
 
-/* lecture 22 Extending from EventEmitter */
-// for DrinkMachine class
-const PizzaShop = require('./pizza-shop');
-const DrinkMachine = require('./drink-machine');
+// /* lecture 22 Extending from EventEmitter */
+// // for DrinkMachine class
+// const PizzaShop = require('./pizza-shop');
+// const DrinkMachine = require('./drink-machine');
 
-// instantiate the imported class
-const pizzaShop = new PizzaShop();
-const drinkMachine = new DrinkMachine();
+// // instantiate the imported class
+// const pizzaShop = new PizzaShop();
+// const drinkMachine = new DrinkMachine();
 
-pizzaShop.on('order', (size, toppings) => {
-  console.log(`order received - baking a ${size} pizza with ${toppings}`);
-  drinkMachine.serveDrink(size);
-});
+// pizzaShop.on('order', (size, toppings) => {
+//   console.log(`order received - baking a ${size} pizza with ${toppings}`);
+//   drinkMachine.serveDrink(size);
+// });
 
-// we can now use the methods of PizzaShop class using the instance pizzaShop
-pizzaShop.order('large', 'mashrooms');
-pizzaShop.displayOrderNumber();
+// // we can now use the methods of PizzaShop class using the instance pizzaShop
+// pizzaShop.order('large', 'mashrooms');
+// pizzaShop.displayOrderNumber();
+
+// /* lecture 24 Streams and Buffers */
+// // const buffer = new Buffer.from("Vishwas", "utf-8") // utf-8 is default encoding so optional
+// const buffer = new Buffer.from('Vishwas');
+// console.log(buffer);
+// // output
+// // <Buffer 56 69 73 68 77 61 73> // this a raw binary data in Hexadecimal format
+// console.log(buffer.toJSON());
+// // output
+// // {
+// //   type: 'Buffer',
+// //   data: [
+// //      86, 105, 115,
+// //     104, 119,  97,
+// //     115
+// //   ]
+// // } // this is utf encoded data
+// console.log(buffer.toString())
+// // output "Vishwas"
+
+// writing to buffer
+const buffer = new Buffer.from('Vishwas'); // here buffer is created with 6 slots
+// buffer.write('code');
+// console.log(buffer.toString()); // codewas (first 4 slots are replaced)
+
+buffer.write('codevolution');
+console.log(buffer.toString()); // codevol (as we have only 7 available slots while creation)

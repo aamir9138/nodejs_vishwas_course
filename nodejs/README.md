@@ -1264,3 +1264,56 @@ how does computer know which character is represented by which number? for that 
 ### Character Encoding
 
 ![character encoding](./pictures//character_encoding.PNG)
+
+## lecture 24 Streams and Buffers
+
+### Streams
+
+![streams](./pictures/streams.PNG)
+
+![streams continued](./pictures//streams_continued.PNG)
+
+The question is how exactly this sequence of data move. which brings to our next topic `Buffers`
+
+### Buffers
+
+![buffers](./pictures/buffers.PNG)
+![buffers continued](./pictures//buffers_continued.PNG)
+
+### connection of Binary data, character sets and encoding to Buffers
+
+what you should know that node.js provides the buffer feature as a global feature that we can use without importing it. let us create a buffer that holds the string `vishwas`
+
+```
+// const buffer = new Buffer.from("Vishwas", "utf-8") // utf-8 is default encoding so optional
+const buffer = new Buffer.from('Vishwas');
+console.log(buffer);
+// output
+// <Buffer 56 69 73 68 77 61 73> // this a raw binary data in Hexadecimal format
+console.log(buffer.toJSON());
+// output
+// {
+//   type: 'Buffer',
+//   data: [
+//      86, 105, 115,
+//     104, 119,  97,
+//     115
+//   ]
+// } // this is utf encoded data
+console.log(buffer.toString())
+// output "Vishwas"
+```
+
+- we can also write to the buffer.
+- when we write to buffer. it will overwrite the first assigned string.
+- the buffer can write upto the first assign number of letters not more than that. it means a space is already allocated for it while creation we cannot increase it.
+
+```
+// writing to buffer
+const buffer = new Buffer.from('Vishwas'); // here buffer is created with 6 slots
+// buffer.write('code');
+// console.log(buffer.toString()); // codewas (first 4 slots are replaced)
+
+buffer.write('codevolution');
+console.log(buffer.toString()); // codevol (as we have only 7 available slots while creation)
+```
