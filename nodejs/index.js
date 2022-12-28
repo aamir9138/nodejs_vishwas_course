@@ -250,10 +250,83 @@
 // console.log(buffer.toString())
 // // output "Vishwas"
 
-// writing to buffer
-const buffer = new Buffer.from('Vishwas'); // here buffer is created with 6 slots
-// buffer.write('code');
-// console.log(buffer.toString()); // codewas (first 4 slots are replaced)
+// // writing to buffer
+// const buffer = new Buffer.from('Vishwas'); // here buffer is created with 6 slots
+// // buffer.write('code');
+// // console.log(buffer.toString()); // codewas (first 4 slots are replaced)
 
-buffer.write('codevolution');
-console.log(buffer.toString()); // codevol (as we have only 7 available slots while creation)
+// buffer.write('codevolution');
+// console.log(buffer.toString()); // codevol (as we have only 7 available slots while creation)
+
+// /* lecture 26 fs Module */
+// const fs = require('node:fs');
+// // reading file content synchronously.
+// const fileContents = fs.readFileSync('./file.txt');
+// // it gives the Buffer output in binary data
+// console.log(fileContents); // <Buffer 48 65 6c 6c 6f 20 43 6f 64 65 76 6f 6c 75 74 69 6f 6e>
+
+// // get data synchronously in human readable format add utf-8 encoding
+// const fs = require('node:fs');
+// // reading file content synchronously.
+// const fileContents = fs.readFileSync('./file.txt', 'utf-8');
+// console.log(fileContents); // Hello Codevolution
+
+// // get data Asynchronously in binary format
+// const fs = require('node:fs');
+// // reading file content Asynchronously. error first callback pattern
+// fs.readFile('./file.txt', (error, data) => {
+//   if (error) {
+//     console.log(error);
+//   } else {
+//     console.log(data); // <Buffer 48 65 6c 6c 6f 20 43 6f 64 65 76 6f 6c 75 74 69 6f 6e>
+//   }
+// });
+
+// // get data Asynchronously in human readable format
+// const fs = require('node:fs');
+// // reading file content Asynchronously. error first callback pattern
+// fs.readFile('./file.txt', 'utf-8', (error, data) => {
+//   if (error) {
+//     console.log(error);
+//   } else {
+//     console.log(data); // Hello Codevolution
+//   }
+// });
+
+// // To prove readFile method is Asynchronous
+// const fs = require('node:fs');
+// console.log('first');
+// const fileContent = fs.readFileSync('./file.txt', 'utf-8');
+// console.log(fileContent);
+// console.log('second');
+// fs.readFile('./file.txt', 'utf-8', (error, data) => {
+//   if (error) {
+//     console.log(error);
+//   } else {
+//     console.log(data); // Hello Codevolution
+//   }
+// });
+// console.log('third');
+
+// writing to the file synchronously
+const fs = require('node:fs');
+fs.writeFileSync('./greet.txt', 'Hello World');
+
+// // writing to the file Asynchronously
+// fs.writeFile('./greet.txt', 'Hello Vishwas!', (error, data) => {
+//   if (error) {
+//     console.log(error);
+//   } else {
+//     console.log('file written');
+//   }
+// });
+
+// appending the new string while writing to file
+// writing to the file Asynchronously
+fs.writeFile('./greet.txt', ' Hello Vishwas!', { flag: 'a' }, (error, data) => {
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('file written');
+  }
+});

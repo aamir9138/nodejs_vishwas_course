@@ -1320,11 +1320,147 @@ console.log(buffer.toString()); // codevol (as we have only 7 available slots wh
 
 ## lecture 25 Asynchronous JavaScript
 
-![asynchronous javascript](./pictures//asynchronous_javascript.PNG)
+![asynchronous javascript](./pictures/asynchronous_javascript.PNG)
 ![javascript blocking](./pictures/javascript_blocking.PNG)
-![javascript single threaded](./pictures//javascript_singlethreaded.PNG)
+![javascript single threaded](./pictures/javascript_singlethreaded.PNG)
 ![asynchronous javascript continued](./pictures/asynchronous_javascript_continued.PNG)
 
 ### Just JavaScript is not enough for asynchronous code
 
-![webbrowser and nodejs for asynchronous](./pictures//webbrowser_and_nodejs_for_asynchronous.PNG)
+![webbrowser and nodejs for asynchronous](./pictures/webbrowser_and_nodejs_for_asynchronous.PNG)
+
+## lecture 26 fs Module
+
+The file system module (fs) allows you to work with the file system on your computer.
+
+1. load the fs module.
+2. after it is loaded we can than access the methods and properties of the module
+
+### reading file contents
+
+1. create a file `file.txt`
+2. use the method `readFileSync` on `fs` module to read the contents of file synchronously. `readFileSync()` method accept path to the file. and returns data in `binary`
+
+```
+const fs = require('node:fs');
+// reading file content synchronously.
+const fileContents = fs.readFileSync('./file.txt');
+// it gives the Buffer output in binary data
+console.log(fileContents); // <Buffer 48 65 6c 6c 6f 20 43 6f 64 65 76 6f 6c 75 74 69 6f 6e>
+```
+
+3. to get the data in human readable format add a second argument `"utf-8"` which is the encoding.
+
+```
+// get data in human readable format add utf-8 encoding
+const fs = require('node:fs');
+// reading file content synchronously.
+const fileContents = fs.readFileSync('./file.txt', 'utf-8');
+console.log(fileContents); // Hello Codevolution
+```
+
+4. fs module internally uses the Buffer.
+5. `readFileSync()` will read the data synchronously means that this method will block the `javaScript engine` main thread till it complete its operation than it will move to the next line of code down the line.
+6. This behaviour is not good for that we use asynchronous mechanism
+7. Node.js is asynchronous. it has features to do tasks asynchronously without blocking the main thread. for that reason another method exist to read the file contents asynchronously i.e `fs.readFile("./file.txt")`
+8. The second argument is a callback function which will be invoked after the contents of file have been read.
+9. This function receive 2 parameter `error` and `data`. This method of callback function is call `error first callback pattern`
+
+```
+// get data Asynchronously in binary format
+const fs = require('node:fs');
+// reading file content Asynchronously. error first callback pattern
+fs.readFile('./file.txt', (error, data) => {
+  if (error) {
+    console.log(error);
+  } else {
+    console.log(data); // <Buffer 48 65 6c 6c 6f 20 43 6f 64 65 76 6f 6c 75 74 69 6f 6e>
+  }
+});
+```
+
+```
+// get data Asynchronously in human readable format
+const fs = require('node:fs');
+// reading file content Asynchronously. error first callback pattern
+fs.readFile('./file.txt', 'utf-8', (error, data) => {
+  if (error) {
+    console.log(error);
+  } else {
+    console.log(data); // Hello Codevolution
+  }
+});
+```
+
+10. to prove that the method `fs.readFile()` is working Asynchronously add some `console.log` statements
+
+```
+// To prove readFile method is Asynchronous
+const fs = require('node:fs');
+console.log('first');
+const fileContent = fs.readFileSync('./file.txt', 'utf-8');
+console.log(fileContent);
+console.log('second');
+fs.readFile('./file.txt', 'utf-8', (error, data) => {
+  if (error) {
+    console.log(error);
+  } else {
+    console.log(data); // Hello Codevolution
+  }
+});
+console.log('third');
+
+// output
+// $ node index
+// first
+// Hello Codevolution
+// second
+// third
+// Hello Codevolution
+```
+
+As you can see `third` is logged before. so what node does is keep track of callback function and allow to execute the other code
+
+### writing contents to the file
+
+1. <u>Synchronously</u>
+
+- The method accept a `file name with its path` and the `content string` which needs to be written
+
+```
+// writing to the file synchronously
+const fs = require('node:fs');
+fs.writeFileSync('./greet.txt', 'Hello World');
+```
+
+- `greet.txt` file will be created and `Hello World` will be written in it.
+
+2. <u>Asynchronously</u>
+
+- The third argument will be a callback function.
+
+```
+// writing to the file Asynchronously
+fs.writeFile('./greet.txt', 'Hello Vishwas!', (error, data) => {
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('file written');
+  }
+});
+```
+
+- if we check the `greet.txt` file the old text `Hello World` will be overwritten by `Hello Vishwas!`. This is the default behaviour of `writeFile` method.
+- however if we want to append the text we need to add a flag `{ flag: "a"}`
+
+```
+// appending the new string while writing to file
+// writing to the file Asynchronously
+fs.writeFile('./greet.txt', ' Hello Vishwas!', { flag: 'a' }, (error, data) => {
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('file written');
+  }
+});
+```
